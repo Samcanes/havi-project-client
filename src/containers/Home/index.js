@@ -28,12 +28,15 @@ export default function Home() {
   }, []);
 
   async function renderUsers() {
-    const response = await fetch("http://localhost:3000/api/getUsers", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(
+      "https://havi-project-server.herokuapp.com/api/getUsers",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     const userData = await response.json();
     console.log(userData);
@@ -55,7 +58,7 @@ export default function Home() {
               <th>DOB(YYYY-MM-DD)</th>
               <th>City</th>
               <th>ZIP</th>
-              <th>Password Stored:</th>
+              <th>Password Stored</th>
             </tr>
           </thead>
           <tbody>

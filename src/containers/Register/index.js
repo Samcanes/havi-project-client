@@ -21,21 +21,24 @@ export default function Register() {
   async function registerUser(event) {
     event.preventDefault();
 
-    const response = await fetch("http://localhost:3000/api/auth/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        firstName,
-        lastName,
-        email,
-        password,
-        dob,
-        city,
-        pin,
-      }),
-    });
+    const response = await fetch(
+      "https://havi-project-server.herokuapp.com/api/auth/register",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          firstName,
+          lastName,
+          email,
+          password,
+          dob,
+          city,
+          pin,
+        }),
+      }
+    );
 
     const data = await response.json();
     console.log(data);
