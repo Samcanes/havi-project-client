@@ -1,0 +1,7 @@
+thead {
+    position: fixed;
+}
+
+tbody {
+    max-width: 500px;
+}
