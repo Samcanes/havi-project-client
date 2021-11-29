@@ -71,6 +71,7 @@ const Header = (props) => {
 
   return (
     <Navbar
+    fixed="top"
       collapseOnSelect
       fixed="top"
       expand="lg"

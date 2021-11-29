@@ -1,11 +1,20 @@
-thead {
+.css-1s0hp0k-MuiDataGrid-columnHeadersInner {
+    background-color: rgb(122, 251, 255);
     position: fixed;
 }
 
-tbody {
-    max-width: 500px;
+.css-1z4p5c-MuiDataGrid-root .MuiDataGrid-row {
+    border-bottom: solid 2px rgb(0, 238, 255);
+    max-height: 200px;
 }
 
-.MuiDataGrid-columnHeadersInner {
-    min-height: 200px;
+
+/* .css-1z4p5c-MuiDataGrid-root .MuiDataGrid-row: {} */
+
+.css-rtrcn9-MuiTablePagination-root {
+    margin-bottom: 00px;
+}
+
+.dataGrid {
+    position: fixed;
 }
