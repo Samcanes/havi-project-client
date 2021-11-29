@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from "react";
 import jwt from "jsonwebtoken";
 import { useNavigate } from "react-router-dom";
-import { Container, Table } from "react-bootstrap";
+import { Container } from "react-bootstrap";
+
 import Header from "../../components/Headers";
+import { DataGrid } from '@mui/x-data-grid';
+
 
 export default function Home() {
   const navigate = useNavigate();
-  const [allUserData, setAllUserData] = useState("");
+  const [allUserData, setAllUserData] = useState([]);
 
   useEffect(() => {
-    renderUsers();
-    console.log(allUserData);
     const token = sessionStorage.getItem("token");
-    console.log(token);
+    // console.log(token);
     if (token) {
       const user = jwt.decode(token);
       if (!user) {
@@ -25,7 +26,29 @@ export default function Home() {
       console.log("here");
       navigate("/login");
     }
+    renderUsers()
   }, []);
+
+  const columns = [
+    { field: '_id', headerName: 'ID', width: 70 },
+    {
+      field: 'fullName',
+      headerName: 'Full name',
+      description: 'This column has a value getter and is not sortable.',
+      sortable: false,
+      width: 160,
+      valueGetter: (params) =>
+        `${params.getValue(params.id, 'firstName') || ''} ${
+          params.getValue(params.id, 'lastName') || ''
+        }`,
+    },
+    { field: 'email', headerName: 'Email', width: 180 },
+    
+    { field: 'city', headerName: 'City', type: 'string', width: 150},
+    { field: 'dob', headerName: 'DOB', type: 'string', width: 130},
+    { field: 'pin', headerName: 'ZIP', type: 'string', width: 90},
+    { field: 'hash_password', headerName: 'Hash Password', width: 400 },
+  ];
 
   async function renderUsers() {
     const response = await fetch(
@@ -39,47 +62,32 @@ export default function Home() {
     );
 
     const userData = await response.json();
-    console.log(userData);
-    setAllUserData(userData);
+    console.log(userData.data)
+    setAllUserData(userData.data.map(
+      (element, index) => { 
+        
+        element.id = index
+        console.log(element)
+        return element
+     }
+     )
+    );
+    console.log(allUserData)
     // ();
   }
-
   return (
     <div>
       <Header></Header>
-
       <Container style={{ marginTop: "80px" }}>
-        <Table style={{ fontSize: 12 }} responsive="sm">
-          <thead>
-            <tr>
-              <th>Last Name</th>
-              <th>First Name</th>
-              <th>Email</th>
-              <th>DOB(YYYY-MM-DD)</th>
-              <th>City</th>
-              <th>ZIP</th>
-              <th>Password Stored</th>
-            </tr>
-          </thead>
-          <tbody>
-            {allUserData
-              ? allUserData.data.map((user) => {
-                  console.log(user);
-                  return (
-                    <tr key={user._id}>
-                      <td> {user.lastName}</td>
-                      <td>{user.firstName}</td>
-                      <td>{user.email}</td>
-                      <td>{user.dob}</td>
-                      <td>{user.city}</td>
-                      <td>{user.pin}</td>
-                      <td>{user.hash_password}</td>
-                    </tr>
-                  );
-                })
-              : null}
-          </tbody>
-        </Table>
+
+      <DataGrid
+        rows={allUserData}
+        columns={columns}
+        rowHeight={38}
+        rowsPerPageOptions={[]}
+        checkboxSelection
+        disableSelectionOnClick
+      />
       </Container>
     </div>
   );
