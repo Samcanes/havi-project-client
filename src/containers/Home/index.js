@@ -85,6 +85,7 @@ export default function Home() {
       setDataSearched(
         allUserData.filter((res) => {
           console.log(res);
+          console.log(res.firstName.toLowerCase().match(searchTerm.toLowerCase()))
           return res.firstName.toLowerCase().match(searchTerm.toLowerCase());
         })
       );
@@ -100,7 +101,7 @@ export default function Home() {
           name="search-form"
           id="search-form"
           className="search-input"
-          placeholder="Search for..."
+          placeholder="Search for first name"
           value={searchTerm}
           onChange={(e) => {
             setSearchTerm(e.target.value)
