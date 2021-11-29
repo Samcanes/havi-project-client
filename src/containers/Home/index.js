@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import jwt from "jsonwebtoken";
 import { useNavigate } from "react-router-dom";
 import { Container } from "react-bootstrap";
-
 import Header from "../../components/Headers";
 import { DataGrid } from "@mui/x-data-grid";
 
@@ -11,6 +10,7 @@ export default function Home() {
   const [allUserData, setAllUserData] = useState([]);
   const [dataSearched, setDataSearched] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+
 
   useEffect(() => {
     const token = sessionStorage.getItem("token");
@@ -77,16 +77,15 @@ export default function Home() {
       }), 
     );
   }
-  const searchFunc = () => {
-    console.log(searchTerm);
+  const searchFunc = (search) => {
+    
     if (searchTerm === "") {
       setDataSearched(allUserData);
     } else {
       setDataSearched(
         allUserData.filter((res) => {
           console.log(res);
-          let basicRes = res.firstName;
-          return basicRes.toLowerCase().match(searchTerm.toLowerCase());
+          return res.firstName.toLowerCase().match(searchTerm.toLowerCase());
         })
       );
       
@@ -105,7 +104,16 @@ export default function Home() {
           value={searchTerm}
           onChange={(e) => {
             setSearchTerm(e.target.value)
-            searchFunc()}}
+            searchFunc(e.target.value)
+          }}
+          onInput={(e) => {
+            setSearchTerm(e.target.value)
+            searchFunc(e.target.value)
+          }}
+          onKeyDown={(e) => {
+            setSearchTerm(e.target.value)
+            searchFunc(e.target.value)
+          }}
         />
         {/* dataSearched */}
         <DataGrid
