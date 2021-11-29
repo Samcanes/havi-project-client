@@ -4,6 +4,7 @@
     "private": true,
     "dependencies": {
         "@emotion/core": "^10.3.0",
+        "@emotion/react": "^11.7.0",
         "@emotion/styled": "^11.6.0",
         "@material-ui/data-grid": "^4.0.0-alpha.37",
         "@mui/material": "^5.2.1",
