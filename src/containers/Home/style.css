@@ -5,3 +5,7 @@ thead {
 tbody {
     max-width: 500px;
 }
+
+.MuiDataGrid-columnHeadersInner {
+    min-height: 200px;
+}

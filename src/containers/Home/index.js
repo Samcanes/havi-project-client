@@ -4,12 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { Container } from "react-bootstrap";
 
 import Header from "../../components/Headers";
-import { DataGrid } from '@mui/x-data-grid';
-
+import { DataGrid } from "@mui/x-data-grid";
 
 export default function Home() {
   const navigate = useNavigate();
   const [allUserData, setAllUserData] = useState([]);
+  const [dataSearched, setDataSearched] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const token = sessionStorage.getItem("token");
@@ -20,34 +21,32 @@ export default function Home() {
         sessionStorage.removeItem("token");
         navigate("/login");
       } else {
-        // populateQuote();
       }
     } else {
       console.log("here");
       navigate("/login");
     }
-    renderUsers()
+    renderUsers();
   }, []);
 
   const columns = [
-    { field: '_id', headerName: 'ID', width: 70 },
+    { field: "_id", headerName: "ID", width: 70 },
     {
-      field: 'fullName',
-      headerName: 'Full name',
-      description: 'This column has a value getter and is not sortable.',
+      field: "fullName",
+      headerName: "Full name",
+      description: "This column has a value getter and is not sortable.",
       sortable: false,
       width: 160,
       valueGetter: (params) =>
-        `${params.getValue(params.id, 'firstName') || ''} ${
-          params.getValue(params.id, 'lastName') || ''
+        `${params.getValue(params.id, "firstName") || ""} ${
+          params.getValue(params.id, "lastName") || ""
         }`,
     },
-    { field: 'email', headerName: 'Email', width: 180 },
-    
-    { field: 'city', headerName: 'City', type: 'string', width: 150},
-    { field: 'dob', headerName: 'DOB', type: 'string', width: 130},
-    { field: 'pin', headerName: 'ZIP', type: 'string', width: 90},
-    { field: 'hash_password', headerName: 'Hash Password', width: 400 },
+    { field: "email", headerName: "Email", width: 180 },
+    { field: "city", headerName: "City", type: "string", width: 150 },
+    { field: "dob", headerName: "DOB", type: "string", width: 130 },
+    { field: "pin", headerName: "ZIP", type: "string", width: 90 },
+    { field: "hash_password", headerName: "Hash Password", width: 400 },
   ];
 
   async function renderUsers() {
@@ -62,32 +61,61 @@ export default function Home() {
     );
 
     const userData = await response.json();
-    console.log(userData.data)
-    setAllUserData(userData.data.map(
-      (element, index) => { 
-        
-        element.id = index
-        console.log(element)
-        return element
-     }
-     )
+    console.log(userData.data);
+    setDataSearched(
+      userData.data.map((element, index) => {
+        element.id = index;
+        console.log(element);
+        return element;
+      }), 
     );
-    console.log(allUserData)
-    // ();
+    setAllUserData(
+      userData.data.map((element, index) => {
+        element.id = index;
+        console.log(element);
+        return element;
+      }), 
+    );
   }
+  const searchFunc = () => {
+    console.log(searchTerm);
+    if (searchTerm === "") {
+      setDataSearched(allUserData);
+    } else {
+      setDataSearched(
+        allUserData.filter((res) => {
+          console.log(res);
+          let basicRes = res.firstName;
+          return basicRes.toLowerCase().match(searchTerm.toLowerCase());
+        })
+      );
+      
+    }
+  };
   return (
     <div>
       <Header></Header>
       <Container style={{ marginTop: "80px" }}>
-
-      <DataGrid
-        rows={allUserData}
-        columns={columns}
-        rowHeight={38}
-        rowsPerPageOptions={[]}
-        checkboxSelection
-        disableSelectionOnClick
-      />
+        <input
+          type="search"
+          name="search-form"
+          id="search-form"
+          className="search-input"
+          placeholder="Search for..."
+          value={searchTerm}
+          onChange={(e) => {
+            setSearchTerm(e.target.value)
+            searchFunc()}}
+        />
+        {/* dataSearched */}
+        <DataGrid
+          rows={dataSearched}
+          columns={columns}
+          rowHeight={38}
+          rowsPerPageOptions={[]}
+          checkboxSelection
+          disableSelectionOnClick
+        />
       </Container>
     </div>
   );
