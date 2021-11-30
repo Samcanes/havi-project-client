@@ -94,7 +94,7 @@ export default function Home() {
   return (
     <div>
       <Header></Header>
-      <Container style={{ marginTop: "80px" }}>
+      <Container style={{ marginTop: "60px" }}>
         <input
           class="form-control rounded"
           type="search"
@@ -117,15 +117,15 @@ export default function Home() {
           aria-label="Search"
           aria-describedby="search-addon"
         />
-
+        <br />
         {/* dataSearched */}
-        <div style={{ width: "100%", height: "80vh" }}>
+        <div className="dataGrid" style={{ width: "100%", height: "80vh" }}>
         <DataGrid
           stickyHeader
           rows={dataSearched}
           columns={columns}
           rowHeight={38}
-          // pageSize={}
+          // pageSize={10}
           checkboxSelection
           disableSelectionOnClick
           checkboxSelection

@@ -1,6 +1,8 @@
 .css-1s0hp0k-MuiDataGrid-columnHeadersInner {
     background-color: rgb(122, 251, 255);
-    position: fixed;
+    /* position: fixed; */
+    text-align: center;
+    vertical-align: middle;
 }
 
 .css-1z4p5c-MuiDataGrid-root .MuiDataGrid-row {
@@ -12,9 +14,9 @@
 /* .css-1z4p5c-MuiDataGrid-root .MuiDataGrid-row: {} */
 
 .css-rtrcn9-MuiTablePagination-root {
-    margin-bottom: 00px;
+    /* margin-bottom: 00px; */
 }
 
 .dataGrid {
-    position: fixed;
+    /* position: fixed; */
 }
